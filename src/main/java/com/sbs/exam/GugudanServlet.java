@@ -1,4 +1,4 @@
-package org.example;
+package com.sbs.exam;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,10 +20,6 @@ public class GugudanServlet extends HttpServlet {
 
     rq.appendBody("<h1>%d단</h1>\n".formatted(dan));
 
-    for (int i = 1; i <= limit; i++) {
-      resp.getWriter().append("<div>%d * %d  = %d</div>\n".formatted(dan, i, dan * i));
-    }
 
-    rq.appendBody("<div class=\"a\"></div>");
   }
 }

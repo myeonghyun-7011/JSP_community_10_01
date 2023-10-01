@@ -1,4 +1,4 @@
-package org.example;
+package com.sbs.exam;
 
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
