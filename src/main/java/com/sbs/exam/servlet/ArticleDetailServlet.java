@@ -1,4 +1,4 @@
-package com.sbs.exam.sevlet;
+package com.sbs.exam.servlet;
 
 import com.sbs.exam.Rq;
 import com.sbs.exam.util.DBUtil;
@@ -13,13 +13,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
 
 @WebServlet("/article/detail")
 public class ArticleDetailServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    Rq rq = new Rq(req,resp);
+
     // DB 연결시작
     Connection conn = null;
     try {
@@ -36,18 +37,18 @@ public class ArticleDetailServlet extends HttpServlet {
 
     try {
       conn = DriverManager.getConnection(url, user, password);
-      DBUtil dbUtil = new DBUtil();
+      int id = rq.getIntParam("id" , 0);
 
-      int id = Integer.parseInt(req.getParameter("id"));
-      // http://localhost:8080/article/list?id=3 문자 형식이기 때문에 형변환.
-
+      if(id == 0) {
+        rq.appendBody("%d번 게시물은 없습니다.".formatted(id));
+      }
 
       SecSql sql = new SecSql();
       sql.append("SELECT *");
       sql.append("FROM article");
       sql.append("WHERE id = ?", id);
 
-     Map<String, Object> articleRow = dbUtil.selectRow(conn, sql);
+     Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
       //2차원 데이터이기 때문에 list<map>으로 받아옴.
 
       req.setAttribute("articleRow" , articleRow);

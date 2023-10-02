@@ -1,4 +1,4 @@
-package com.sbs.exam.sevlet;
+package com.sbs.exam.servlet;
 
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
@@ -35,13 +35,12 @@ public class ArticleListServlet extends HttpServlet {
 
     try {
       conn = DriverManager.getConnection(url, user, password);
-      DBUtil dbUtil = new DBUtil();
 
       SecSql sql = new SecSql();
       sql.append("SELECT *");
       sql.append("FROM article");
 
-      List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);
+      List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
       //2차원 데이터이기 때문에 list<map>으로 받아옴.
 
       req.setAttribute("articleRows" , articleRows);
