@@ -22,7 +22,7 @@ public class ArticleListServlet extends HttpServlet {
     // DB 연결시작
     Connection conn = null;
     try {
-      Class.forName("com.mysql.jdbc.Driver");
+      Class.forName("com.mysql.cj.jdbc.Driver");
     } catch (ClassNotFoundException e) {
       System.out.printf("[ClassNotFoundException 예외, %s]", e.getMessage());
       System.out.println("DB 드라이버 클래스 로딩 실패");
@@ -42,6 +42,10 @@ public class ArticleListServlet extends HttpServlet {
       sql.append("FROM article");
 
       List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);
+      //2차원 데이터이기 때문에 list<map>으로 받아옴.
+
+      req.setAttribute("articleRows" , articleRows);
+      req.getRequestDispatcher("../article/list.jsp").forward(req,resp);
 
     } catch (SQLException e) {
       e.printStackTrace();
