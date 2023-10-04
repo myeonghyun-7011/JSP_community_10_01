@@ -13,9 +13,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
 
-@WebServlet("/article/doWrite")
-public class ArticleDoWriteServlet extends HttpServlet {
+@WebServlet("/article/modify")
+public class ArticleModifyServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     Rq rq = new Rq(req,resp);
@@ -36,27 +37,23 @@ public class ArticleDoWriteServlet extends HttpServlet {
 
     try {
       conn = DriverManager.getConnection(url, user, password);
+      int id = rq.getIntParam("id" , 0);
 
-      String title = rq.getParam("title", "");
-//      if(title == "" || title.trim().length() == 0){
-//        System.out.println("제목을 입력해주세요.");
-//        return;
-//      }
+      if(id == 0) {
+        rq.appendBody("%d번 게시물은 없습니다.".formatted(id));
+      }
 
-      String body = rq.getParam("body", "");
+      SecSql sql = new SecSql();
+      sql.append("SELECT *");
+      sql.append("FROM article");
+      sql.append("WHERE id = ?", id);
 
+     Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
+      //2차원 데이터이기 때문에 list<map>으로 받아옴.
 
-      SecSql sql = SecSql.from("INSERT INTO article");
-      sql.append("SET regDate = NOW()");
-      sql.append(", updateDate = NOW()");
-      sql.append(", title = ?" , title);
-      sql.append(", body = ?" , body);
+      req.setAttribute("articleRow" , articleRow);
+      rq.jsp("../article/modify");
 
-      int id = DBUtil.insert(conn, sql);
-
-      rq.appendBody("<script>alert('%d번 글이 생성되었습니다.'); location.replace('list');</script>".formatted(id));
-      // rq.appendBody(String.format("<script>alert('%d번 글이 생성되었습니다.'); location.replace('list');</script>",id));
-      // 글이 생성된후 다시 list로 페이지를 돌려줌. formatted 는 치환문
     } catch (SQLException e) {
       e.printStackTrace();
     } finally {
@@ -74,5 +71,4 @@ public class ArticleDoWriteServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     doGet(req, resp);
   }
-
 }

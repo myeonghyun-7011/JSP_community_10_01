@@ -41,7 +41,8 @@ Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("art
       <td> <%= articleRow.get("title") %></td>
       <td><%= articleRow.get("body") %></td>
       <td>
-        <a href="doDelete?id=<%= articleRow.get("id")%>">삭제하기</a>
+        <a href="doDelete?id=<%= articleRow.get("id")%>">삭제</a>
+        <a href="modify?id=<%= articleRow.get("id")%>">수정</a>
       </td>
     </tr>
     </tbody>
