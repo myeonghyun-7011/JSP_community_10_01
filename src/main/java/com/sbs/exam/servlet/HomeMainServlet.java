@@ -16,7 +16,7 @@ public class HomeMainServlet extends HttpServlet { // HttpServlet 상속받아�
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     Rq rq = new Rq(req, resp);
 
-    req.getRequestDispatcher("../home/main.jsp").forward(req, resp);
+    rq.jsp("../home/main");
   }
   @Override // write.jsp.에서 post된걸 날려줘야함.
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -12,10 +12,12 @@ import java.io.IOException;
 @WebServlet ("/article/write")
 public class ArticleWriteServlet extends HttpServlet { // HttpServlet 상속받아와야함.
 
+
   @Override //alt + ins => ovrride doget클릭
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    Rq rq = new Rq(req, resp);
 
-    req.getRequestDispatcher("../article/write.jsp").forward(req, resp);
+    rq.jsp("../article/write");
   }
   @Override // write.jsp.에서 post된걸 날려줘야함.
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

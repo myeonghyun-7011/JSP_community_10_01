@@ -52,7 +52,7 @@ public class ArticleDetailServlet extends HttpServlet {
       //2차원 데이터이기 때문에 list<map>으로 받아옴.
 
       req.setAttribute("articleRow" , articleRow);
-      req.getRequestDispatcher("../article/detail.jsp").forward(req,resp);
+      rq.jsp("../article/detail");
 
     } catch (SQLException e) {
       e.printStackTrace();

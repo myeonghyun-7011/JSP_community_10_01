@@ -1,5 +1,7 @@
 package com.sbs.exam;
 
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -41,10 +43,10 @@ public class Rq {
     }
   }
 
-  public String getParam(String paramName, String defaultvalue){
+  public String getParam(String paramName, String defaultvalue) {
     String value = req.getParameter(paramName);
 
-    if (value == null){
+    if (value == null) {
       return defaultvalue;
     }
     return value;
@@ -57,4 +59,15 @@ public class Rq {
       throw new RuntimeException(e); // 문제가 발생해도 지나가게끔.
     }
   }
+
+  public void jsp(String jspPath) { // 경로 줄여줌 코드 줄여줌.
+    RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/" + jspPath + ".jsp");
+
+    try {
+      requestDispatcher.forward(req, resp);
+    } catch (ServletException | IOException e) {
+      e.printStackTrace(); // 오류 생겻을시 방지하는거라느데 / 시간되면 찾아보기
+    }
+  }
 }
+
