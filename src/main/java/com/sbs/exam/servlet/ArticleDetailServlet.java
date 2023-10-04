@@ -67,4 +67,8 @@ public class ArticleDetailServlet extends HttpServlet {
     }
     // DB 연결 끝
   }
+  @Override // write.jsp.에서 post된걸 날려줘야함.
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    doGet(req, resp);
+  }
 }

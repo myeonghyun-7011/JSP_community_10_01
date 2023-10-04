@@ -19,15 +19,24 @@
 </head>
 
 <body>
+  <h1>게시물 리스트 </h1>
 
-<h1>게시물 리스트 </h1>
-<table border="1" style="text-align : center">
-  <colgroup>
-    <col width="100">
-    <col>
-    <col>
-    <col width="100">
-  </colgroup>
+  <div>
+    <a href="../home/main">홈으로 돌아가기</a>
+    &nbsp;
+    <a href="write">게시물 작성</a>
+
+  </div>
+
+
+  <table border="1" style="text-align : center">
+    <colgroup>
+      <col width="100">
+      <col>
+      <col>
+      <col width="100">
+    </colgroup>
+
   <thead>
     <tr>
       <th>번호</th>
@@ -36,6 +45,7 @@
       <th>제목</th>
     </tr>
   </thead>
+
   <tbody>
       <%
       for( Map<String, Object> articleRow : articleRows) {
@@ -51,9 +61,8 @@
         </td>
       </tr>
       <% } %>
-
   </tbody>
-</table>
+  </table>
 
 <style>
   .page > a.red {
@@ -69,9 +78,7 @@
 
 </div>
 
-<div>
-  <a href="../home/main">홈으로 돌아가기</a>
-</div>
+
 
 
 </body>

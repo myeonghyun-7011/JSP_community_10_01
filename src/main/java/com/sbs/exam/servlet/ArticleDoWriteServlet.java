@@ -38,9 +38,9 @@ public class ArticleDoWriteServlet extends HttpServlet {
       conn = DriverManager.getConnection(url, user, password);
 
       String title = rq.getParam("title", "");
-//      if(title == "" || title.trim().length() == 0){
-//        System.out.println("제목을 입력해주세요.");
-//      }
+      if(title == "" || title.trim().length() == 0){
+        System.out.println("제목을 입력해주세요.");
+      }
 
       String body = rq.getParam("body", "");
 
@@ -69,4 +69,9 @@ public class ArticleDoWriteServlet extends HttpServlet {
     }
     // DB 연결 끝
   }
+  @Override // write.jsp.에서 post된걸 날려줘야함.
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    doGet(req, resp);
+  }
+
 }

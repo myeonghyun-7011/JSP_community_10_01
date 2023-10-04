@@ -41,7 +41,7 @@ public class ArticleListServlet extends HttpServlet {
 
       // 공식임 page창  외워두면 편함.
       int page = rq.getIntParam("page", 1);
-      int itemInAPage = 20;
+      int itemInAPage = 10;
       int limitFrom = (page - 1) * itemInAPage;
 
       SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
@@ -78,5 +78,9 @@ public class ArticleListServlet extends HttpServlet {
       }
     }
     // DB 연결 끝
+  }
+  @Override // write.jsp.에서 post된걸 날려줘야함.
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    doGet(req, resp);
   }
 }
