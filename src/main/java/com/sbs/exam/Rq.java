@@ -41,6 +41,15 @@ public class Rq {
     }
   }
 
+  public String getParam(String paramName, String defaultvalue){
+    String value = req.getParameter(paramName);
+
+    if (value == null){
+      return defaultvalue;
+    }
+    return value;
+  }
+
   public void appendBody(String str) {
     try {
       resp.getWriter().append(str); //getWriter 오류 수정 try catch
