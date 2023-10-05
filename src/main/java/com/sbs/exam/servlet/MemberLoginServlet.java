@@ -9,17 +9,15 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet ("/home/main")
-public class HomeMainServlet extends HttpServlet { // HttpServlet 상속받아와야함.
+@WebServlet ("/member/login")
+public class MemberLoginServlet extends HttpServlet { // HttpServlet 상속받아와야함.
+
 
   @Override //alt + ins => ovrride doget클릭
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     Rq rq = new Rq(req, resp);
 
-    req.setAttribute("age", 20);
-    req.setAttribute("isLogined", true);
-
-    rq.jsp("../home/main");
+    rq.jsp("../member/login");
   }
   @Override // write.jsp.에서 post된걸 날려줘야함.
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
