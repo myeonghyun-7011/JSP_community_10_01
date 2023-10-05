@@ -2,6 +2,7 @@ package com.sbs.exam.servlet;
 
 import com.sbs.exam.Config;
 import com.sbs.exam.Rq;
+import com.sbs.exam.exception.SQLErrorException;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
 import jakarta.servlet.ServletException;
@@ -57,7 +58,11 @@ public class ArticleDoWriteServlet extends HttpServlet {
       // 글이 생성된후 다시 list로 페이지를 돌려줌. formatted 는 치환문
     } catch (SQLException e) {
       e.printStackTrace();
-    } finally {
+    }  catch (SQLErrorException e){
+      e.getOrigin().printStackTrace();
+
+    }
+    finally {
       try {
         if (conn != null && !conn.isClosed()) {
           conn.close();
