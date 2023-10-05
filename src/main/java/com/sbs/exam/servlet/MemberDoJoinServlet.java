@@ -39,9 +39,20 @@ public class MemberDoJoinServlet extends HttpServlet {
       String loginPw = rq.getParam("loginPw", "");
       String name = rq.getParam("name", "");
 
+      // true = 1 / false = 0 으로 출력함.
+      SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
+      sql.append("FROM member");
+      sql.append("WHERE loginId = ? ", loginId);
 
+      boolean isJoinDuplicateLoginId = DBUtil.selectRowIntValue(conn, sql) == 0;
 
-      SecSql sql = SecSql.from("INSERT INTO member");
+      // 아이디 중복체크
+      if(isJoinDuplicateLoginId == false) {
+        rq.appendBody("<script>alert('%s (은)는 이미 사용중인 아이디입니다.'); history.back(); </script>".formatted(loginId));
+        return;
+      } // history.back() 은 "이미사용중 아이디"라고 띄워주고 그 화면으로 남겨주기 위함.
+
+      sql = SecSql.from("INSERT INTO member");
       sql.append("SET regDate = NOW()");
       sql.append(", updateDate = NOW()");
       sql.append(", loginId = ?" , loginId);
