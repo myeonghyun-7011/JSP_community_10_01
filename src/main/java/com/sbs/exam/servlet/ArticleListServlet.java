@@ -1,5 +1,6 @@
 package com.sbs.exam.servlet;
 
+import com.sbs.exam.Config;
 import com.sbs.exam.Rq;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
@@ -24,20 +25,17 @@ public class ArticleListServlet extends HttpServlet {
 
     // DB 연결시작
     Connection conn = null;
+    String driverName = Config.getDriverClassName();
     try {
-      Class.forName("com.mysql.cj.jdbc.Driver");
+      Class.forName(driverName);
     } catch (ClassNotFoundException e) {
       System.out.printf("[ClassNotFoundException 예외, %s]", e.getMessage());
       System.out.println("DB 드라이버 클래스 로딩 실패");
       return;
     }
 
-    String url = "jdbc:mysql://127.0.0.1:3306/JSP_Community?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
-    String user = "sbsst";
-    String password = "sbs123414";
-
     try {
-      conn = DriverManager.getConnection(url, user, password);
+      conn = DriverManager.getConnection(Config.getDBUrl(), Config.getDBId(), Config.getDBPw());
 
       // 공식임 page창  외워두면 편함.
       int page = rq.getIntParam("page", 1);
