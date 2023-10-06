@@ -10,8 +10,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class Rq {
-  private final HttpServletRequest req;
-  private final HttpServletResponse resp;
+  private HttpServletRequest req;
+  private HttpServletResponse resp;
+  private String controllerTypeName;
+  private String controllerName;
+  private String actionMethodName;
+  boolean isInvalid = false;
 
 
   public Rq(HttpServletRequest req, HttpServletResponse resp) {
@@ -25,7 +29,26 @@ public class Rq {
     }
     resp.setCharacterEncoding("UTF-8"); // 완성되는 HTML의 인코딩을 UTF-8로 하겠다.
     resp.setContentType("text/html; charset-utf-8"); // 브라우저에게 우리가 만든 결과물이 UTF-8이라고 알리는 의미.
+
+    String requestUri = req.getRequestURI(); // "/s/article/list" 로 들어오는데 이걸 쪼갬
+    String[] requestUriBits = requestUri.split("/"); // 배열이기 때문에 String[] 으로.
+    // ""/s/article/list
+    // [0][1][2][3]
+
+    int minBitsCount = 4;
+
+    if (requestUriBits.length < minBitsCount) {
+      isInvalid = true;
+      return;
+    }
+
+    this.controllerTypeName = requestUriBits[1];
+    this.controllerName = requestUriBits[2]; // controllerName 은 article 이냐  member인지 물어봄.
+    this.actionMethodName = requestUriBits[3]; // actionMethodName 는 list인지 write 인지 detail or modify;
+
+
   }
+
   public HttpServletRequest getReq() {
     return req;
   }
@@ -69,6 +92,18 @@ public class Rq {
     } catch (ServletException | IOException e) {
       e.printStackTrace(); // 오류 생겻을시 방지하는거라느데 / 시간되면 찾아보기
     }
+  }
+
+  public String getControllerTypeName() {
+    return controllerTypeName;
+  }
+
+  public String getControllerName() {
+    return controllerName;
+  }
+
+  public String getActionMethodName() {
+    return actionMethodName;
   }
 }
 

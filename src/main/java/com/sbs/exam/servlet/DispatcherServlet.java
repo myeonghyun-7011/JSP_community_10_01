@@ -20,24 +20,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/s/*")
+@WebServlet("/usr/*")
 public class DispatcherServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     Rq rq = new Rq(req, resp);
-
-    String requestUri = req.getRequestURI(); // "/s/article/list" 로 들어오는데 이걸 쪼갬
-    String[] requestUriBits =  requestUri.split("/"); // 배열이기 때문에 String[] 으로.
-    // ""/s/article/list
-    // [0][1][2][3]
-
-    if(requestUriBits.length < 4){
-      rq.appendBody("올바른 요청이 아닙니다.");
-      return;
-    }
-
-    String controllerName = requestUriBits[2]; // controllerName 은 article 이냐  member인지 물어봄.
-    String actionMethodName =  requestUriBits[3]; // actionMethodName 는 list인지 write 인지 detail or modify;
 
 
     // DB 연결시작
@@ -75,12 +62,14 @@ public class DispatcherServlet extends HttpServlet {
       req.setAttribute("loginedMemberRow", loginedMemberRow);
       // 모든 요청을 들어가기 전에 무조건 해야 하는 일 끝
 
-      if(controllerName.equals("article")) {   //controllerName이 article을 만낫다면
-        ArticleController articleController = new ArticleController(conn);
-
-        if(actionMethodName.equals("list")){
-          articleController.actionList(rq);
-        }
+      switch (rq.getControllerTypeName()) { //1. TpyName = usr 가리킴.
+        case "usr" :
+          ArticleController articleController = new ArticleController(conn); // ArticleController 객체를 생성해서.
+          switch (rq.getControllerName()){ // 2. 이게 article이라면
+            case "article" :
+              articleController.performAction(rq); //performAction를 실행시켜줘라.
+              break;
+          }
       }
 
     } catch (SQLException e) {
