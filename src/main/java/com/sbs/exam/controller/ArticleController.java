@@ -12,8 +12,8 @@ import java.util.Map;
 
 public class ArticleController {
   private ArticleService articleService;
-  public ArticleController(Connection conn, Rq rq) {
-    articleService = new ArticleService(conn,rq);
+  public ArticleController(Connection conn) {
+    articleService = new ArticleService(conn);
   }
 
   public void actionList(Rq rq) {
