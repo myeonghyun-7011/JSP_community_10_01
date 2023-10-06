@@ -25,8 +25,9 @@ public class Rq {
     }
     resp.setCharacterEncoding("UTF-8"); // 완성되는 HTML의 인코딩을 UTF-8로 하겠다.
     resp.setContentType("text/html; charset-utf-8"); // 브라우저에게 우리가 만든 결과물이 UTF-8이라고 알리는 의미.
-
-
+  }
+  public HttpServletRequest getReq() {
+    return req;
   }
 
   public int getIntParam(String paramName, int defaultValue) {

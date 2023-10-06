@@ -2,6 +2,7 @@ package com.sbs.exam.servlet;
 
 import com.sbs.exam.Config;
 import com.sbs.exam.Rq;
+import com.sbs.exam.controller.ArticleController;
 import com.sbs.exam.exception.SQLErrorException;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
@@ -19,11 +20,25 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/article/list")
-public class ArticleListServlet extends HttpServlet {
+@WebServlet("/s/*")
+public class DispatcherServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     Rq rq = new Rq(req, resp);
+
+    String requestUri = req.getRequestURI(); // "/s/article/list" 로 들어오는데 이걸 쪼갬
+    String[] requestUriBits =  requestUri.split("/"); // 배열이기 때문에 String[] 으로.
+    // ""/s/article/list
+    // [0][1][2][3]
+
+    if(requestUriBits.length < 4){
+      rq.appendBody("올바른 요청이 아닙니다.");
+      return;
+    }
+
+    String controllerName = requestUriBits[2]; // controllerName 은 article 이냐  member인지 물어봄.
+    String actionMethodName =  requestUriBits[3]; // actionMethodName 는 list인지 write 인지 detail or modify;
+
 
     // DB 연결시작
     Connection conn = null;
@@ -39,8 +54,7 @@ public class ArticleListServlet extends HttpServlet {
     try {
       conn = DriverManager.getConnection(Config.getDBUrl(), Config.getDBId(), Config.getDBPw());
 
-
-      // 공통 상단 정보 시작
+      // 모든 요청을 들어가기 전에 무조건 해야 하는 일 시작.
       HttpSession session = req.getSession();
 
       boolean isLogined = false;
@@ -56,45 +70,23 @@ public class ArticleListServlet extends HttpServlet {
         sql.append("WHERE id = ? ", loginedMemberId);
         loginedMemberRow = DBUtil.selectRow(conn, sql);
       }
-
-
       req.setAttribute("isLogined", isLogined);
       req.setAttribute("loginedMemberId", loginedMemberId);
       req.setAttribute("loginedMemberRow", loginedMemberRow);
-      // 공통 상단 정보 끝
+      // 모든 요청을 들어가기 전에 무조건 해야 하는 일 끝
 
-      // 공식임 page창  외워두면 편함.
-      int page = rq.getIntParam("page", 1);
-      int itemInAPage = 10;
-      int limitFrom = (page - 1) * itemInAPage;
+      if(controllerName.equals("article")) {   //controllerName이 article을 만낫다면
+        ArticleController articleController = new ArticleController(conn, rq);
 
-      SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
-      sql.append("FROM article");
-
-      int totalCount = DBUtil.selectRowIntValue(conn,sql);;
-      int totalPage = (int) Math.ceil((double) totalCount / itemInAPage); //반올림 하는방법
-
-      sql = new SecSql(); //SecSql 위에 생성해서 지워짐.
-
-      sql.append("SELECT *");
-      sql.append("FROM article");
-      sql.append("ORDER BY id DESC");
-      sql.append("LIMIT ?, ?", limitFrom, itemInAPage);
-
-      List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
-      //2차원 데이터이기 때문에 list<map>으로 받아옴.
-
-      req.setAttribute("articleRows", articleRows);
-      req.setAttribute("page", page);
-      req.setAttribute("totalPage", totalPage);
-
-      rq.jsp("../article/list");
+        if(actionMethodName.equals("list")){
+          articleController.actionList();
+        }
+      }
 
     } catch (SQLException e) {
       e.printStackTrace();
     } catch (SQLErrorException e){
       e.getOrigin().printStackTrace();
-
     }
     finally {
       try {
