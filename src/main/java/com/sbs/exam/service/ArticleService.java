@@ -1,6 +1,7 @@
 package com.sbs.exam.service;
 
 import com.sbs.exam.Rq;
+import com.sbs.exam.dto.Article;
 import com.sbs.exam.repository.ArticleRepository;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
@@ -22,15 +23,16 @@ public class ArticleService {
     int itemInAPage = getItemsInAPage();
     int totalCount = articleRepository.getTotalCount();
 
-    int totalPage = (int) Math.ceil((double) totalCount / itemInAPage );
+    int totalPage = (int) Math.ceil((double) totalCount / itemInAPage ); // 반올림
     return totalPage;
   }
-  public List<Map<String, Object>> getForPrintArticleRows(int page) {
+  public List<Article> getForPrintArticles(int page) {
     int itemInAPage = getItemsInAPage();
     int limitFrom = (page - 1) * itemInAPage;
 
-    List<Map<String, Object>> articleRows = articleRepository.getArticleRows(itemInAPage, limitFrom );
-    return articleRows;
+    List<Article> articles = articleRepository.getArticles(itemInAPage, limitFrom );
+
+    return articles;
     //2차원 데이터이기 때문에 list<map>으로 받아옴.
   }
 }
