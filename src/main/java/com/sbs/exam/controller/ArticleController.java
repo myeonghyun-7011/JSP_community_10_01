@@ -13,10 +13,12 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+
 public class ArticleController extends Controller {
   private ArticleService articleService;
 
   public ArticleController(Connection conn) {
+
     articleService = new ArticleService(conn);
   }
 
@@ -105,7 +107,6 @@ public class ArticleController extends Controller {
     rq.getReq().setAttribute("totalPage", totalPage);
 
     rq.jsp("../article/list");
-
 
   }
 

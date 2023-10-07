@@ -6,17 +6,24 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class Rq {
+  @Getter
   private HttpServletRequest req;
   private HttpServletResponse resp;
+  @Getter
   private String controllerTypeName;
+  @Getter
   private String controllerName;
+  @Getter
   private String actionMethodName;
-  boolean isInvalid = false;
+  @Getter
+  private boolean isInvalid = false;
 
 
   public Rq(HttpServletRequest req, HttpServletResponse resp) {
@@ -49,11 +56,6 @@ public class Rq {
 
 
   }
-
-  public HttpServletRequest getReq() {
-    return req;
-  }
-
   public int getIntParam(String paramName, int defaultValue) {
     String value = req.getParameter(paramName);
 
@@ -87,17 +89,6 @@ public class Rq {
     }
   }
 
-  public String getControllerTypeName() {
-    return controllerTypeName;
-  }
-
-  public String getControllerName() {
-    return controllerName;
-  }
-
-  public String getActionMethodName() {
-    return actionMethodName;
-  }
   public void print(String str) {
     try {
       resp.getWriter().append(str); //getWriter 오류 수정 try catch
