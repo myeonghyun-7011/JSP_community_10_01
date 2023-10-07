@@ -126,5 +126,8 @@ public class Rq {
     println("</script>");
 
   }
+  public void setAttr(String attrName, Object attrValue) {
+    req.setAttribute(attrName, attrValue);
+  }
 }
 

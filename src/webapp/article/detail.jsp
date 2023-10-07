@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.Map" %>
+<%@ page import = "com.sbs.exam.dto.Article" %>
 
 
 <%
-Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("articleRow");
+  Article article = (Article) request.getAttribute("article");
 %>
 
 
@@ -38,14 +39,14 @@ Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("art
 
     <tbody>
     <tr>
-      <td> <%= articleRow.get("id")%>번</td>
-      <td> <%= articleRow.get("regDate")%></td>
-      <td><%= articleRow.get("updateDate")%></td>
-      <td> <%= articleRow.get("title") %></td>
-      <td><%= articleRow.get("body") %></td>
+      <td> <%= article.id %>번</td>
+      <td> <%= article.regDate %></td>
+      <td><%= article.updateDate %></td>
+      <td> <%= article.title %></td>
+      <td><%= article.body %></td>
       <td>
-        <a href="doDelete?id=<%= articleRow.get("id")%>">삭제</a>
-        <a href="modify?id=<%= articleRow.get("id")%>">수정</a>
+        <a href="doDelete?id=&{param.id}">삭제</a>
+        <a href="modify?id=&{param.id}">수정</a>
       </td>
     </tr>
     </tbody>

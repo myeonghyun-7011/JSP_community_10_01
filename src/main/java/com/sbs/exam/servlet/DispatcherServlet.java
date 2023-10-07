@@ -52,7 +52,6 @@ public class DispatcherServlet extends HttpServlet {
         loginedMemberId = (int) session.getAttribute("loginedMemberId");
         isLogined = true;
 
-
         SecSql sql = SecSql.from("SELECT * FROM member");
         sql.append("WHERE id = ? ", loginedMemberId);
         loginedMemberRow = DBUtil.selectRow(conn, sql);
