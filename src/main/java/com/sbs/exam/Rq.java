@@ -1,5 +1,6 @@
 package com.sbs.exam;
 
+import com.sbs.exam.util.Util;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -76,14 +77,6 @@ public class Rq {
     return value;
   }
 
-  public void appendBody(String str) {
-    try {
-      resp.getWriter().append(str); //getWriter 오류 수정 try catch
-    } catch (IOException e) {
-      throw new RuntimeException(e); // 문제가 발생해도 지나가게끔.
-    }
-  }
-
   public void jsp(String jspPath) { // 경로 줄여줌 코드 줄여줌.
     RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/" + jspPath + ".jsp");
 
@@ -104,6 +97,34 @@ public class Rq {
 
   public String getActionMethodName() {
     return actionMethodName;
+  }
+  public void print(String str) {
+    try {
+      resp.getWriter().append(str); //getWriter 오류 수정 try catch
+    } catch (IOException e) {
+      throw new RuntimeException(e); // 문제가 발생해도 지나가게끔.
+    }
+  }
+  public void println(String str){
+    print(str + "\n");
+  }
+
+  public void printf(String format, Object... args) {
+    print(Util.f(format, args));
+  }
+
+  public void historyBack(String msg) {
+    println("<script>");
+    printf("alert('%s'); \n", msg);
+    println("history.back();");
+    println("</script>");
+  }
+  public void replace(String msg, String redirectUri){
+    println("<script>");
+    printf("alert('%s'); \n", msg);
+    printf("location.replace('%s');\n", redirectUri); // back 햇을 경우 다시 dowrite로 돌아오지 않게끔.
+    println("</script>");
+
   }
 }
 

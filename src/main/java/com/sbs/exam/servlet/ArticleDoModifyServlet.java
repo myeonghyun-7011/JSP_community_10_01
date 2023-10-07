@@ -51,7 +51,7 @@ public class ArticleDoModifyServlet extends HttpServlet {
 
       DBUtil.update(conn, sql);
 
-      rq.appendBody("<script>alert('%d번 글이 수정되었습니다.'); location.replace('detail?id=%d');</script>".formatted(id,id));
+      rq.print("<script>alert('%d번 글이 수정되었습니다.'); location.replace('detail?id=%d');</script>".formatted(id,id));
       // rq.appendBody(String.format("<script>alert('%d번 글이 생성되었습니다.'); location.replace('list');</script>",id));
       // 글이 생성된후 다시 list로 페이지를 돌려줌. formatted 는 치환문
     } catch (SQLException e) {

@@ -49,7 +49,7 @@ public class MemberDoJoinServlet extends HttpServlet {
 
       // 아이디 중복체크
       if(isJoinDuplicateLoginId == false) {
-        rq.appendBody("<script>alert('%s (은)는 이미 사용중인 아이디입니다.'); history.back(); </script>".formatted(loginId));
+        rq.print("<script>alert('%s (은)는 이미 사용중인 아이디입니다.'); history.back(); </script>".formatted(loginId));
         return;
       } // history.back() 은 "이미사용중 아이디"라고 띄워주고 그 화면으로 남겨주기 위함.
 
@@ -62,7 +62,7 @@ public class MemberDoJoinServlet extends HttpServlet {
 
       int id = DBUtil.insert(conn, sql);
 
-      rq.appendBody("<script>alert('%d번 회원이 생성되었습니다.'); location.replace('../home/main');</script>".formatted(id));
+      rq.print("<script>alert('%d번 회원이 생성되었습니다.'); location.replace('../home/main');</script>".formatted(id));
       // rq.appendBody(String.format("<script>alert('%d번 글이 생성되었습니다.'); location.replace('list');</script>",id));
       // 글이 생성된후 다시 list로 페이지를 돌려줌. formatted 는 치환문
     } catch (SQLException e) {

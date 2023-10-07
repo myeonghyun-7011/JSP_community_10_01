@@ -66,7 +66,7 @@ public class ArticleDetailServlet extends HttpServlet {
       int id = rq.getIntParam("id" , 0);
 
       if(id == 0) {
-        rq.appendBody("%d번 게시물은 없습니다.".formatted(id));
+        rq.print("%d번 게시물은 없습니다.".formatted(id));
       }
 
       SecSql sql = new SecSql();
