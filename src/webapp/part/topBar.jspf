@@ -1,28 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-<%@ page import="java.util.Map" %>
-
-<%
-boolean isLogined = (boolean) request.getAttribute("isLogined");
-int loginedMemberId = (int) request.getAttribute("loginedMemberId");
-Map<String, Object> loginedMemberRow = (Map<String, Object>) request.getAttribute("loginedMemberRow");
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div>
-  <% if( !isLogined ) { %>
-  &nbsp;<a href="../member/login">로그인</a>
-  &nbsp
-  <a href="../member/join">회원가입</a>
-  <% } %>
+  <c:set var="!isLogined" value="${!isLogined}"/>
+  <c:if test="${!isLogined}">
+    <a href="../member/login">로그인</a>
+    &nbsp
+    <a href="../member/join">회원가입</a>
+  </c:if>
 
-  <% if( isLogined ) { %>
-  <span>"<%=loginedMemberRow.get("name")%>" 회원님 환영합니다.</span>
-  <a href="/usr/member/doLogout">로그아웃</a>
-  <% } %>
-
+  <c:set var="isLogined" value="${isLogined}"/>
+  <c:if test="${isLogined}">
+    <span>"${loginedMemberRow.get("name")}" 회원님 환영합니다.</span>
+    <a href="/usr/member/doLogout">로그아웃</a>
+  </c:if>
   <a href="/usr/article/list">게시물 리스트</a>
-
 </div>
-
 
 

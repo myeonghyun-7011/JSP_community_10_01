@@ -1,19 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.Map" %>
-<%@ page import = "com.sbs.exam.dto.Article" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-<%
-  Article article = (Article) request.getAttribute("article");
-%>
-
-
-<!doctype html>
-<html lang="ko">
-<head>
-  <title>게시물 상세보기</title>
-</head>
-<body>
+<c:set var="pageTitle" value="게시물 상세보기" />
+<%@ include file ="../part/head.jspf" %>
   <h1>게시물 상세보기</h1>
 
   <%@ include file ="../part/topBar.jspf" %>
@@ -39,14 +28,14 @@
 
     <tbody>
     <tr>
-      <td> <%= article.id %>번</td>
-      <td> <%= article.regDate %></td>
-      <td><%= article.updateDate %></td>
-      <td> <%= article.title %></td>
-      <td><%= article.body %></td>
+      <td>${article.id}번</td>
+      <td>${article.regDate}</td>
+      <td>${article.updateDate}</td>
+      <td>${article.title}</td>
+      <td>${article.body}</td>
       <td>
-        <a href="doDelete?id=&{param.id}">삭제</a>
-        <a href="modify?id=&{param.id}">수정</a>
+        <a href="doDelete?id=${param.id}">삭제</a>
+        <a href="modify?id=${param.id}">수정</a>
       </td>
     </tr>
     </tbody>
@@ -57,5 +46,4 @@
     <a href="list">리스트로 돌아가기</a>
   </div>
 
-</body>
-</html>
+<%@ include file ="../part/foot.jspf" %>

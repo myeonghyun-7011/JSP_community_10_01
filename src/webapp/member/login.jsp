@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.Map" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-<!doctype html>
-<html lang="ko">
-<head>
-  <title> 로그인 </title>
-</head>
+<c:set var="pageTitle" value="로그인" />
+<%@ include file ="../part/head.jspf" %>
 <body>
 <h1> 로그인 </h1>
 <script>
@@ -52,5 +48,4 @@
 </form>
 
 
-</body>
-</html>
+<%@ include file ="../part/foot.jspf" %>

@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.Map" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-<!doctype html>
-<html lang="ko">
-<head>
-  <title>게시물 작성</title>
-</head>
+<c:set var="pageTitle" value="게시물 작성" />
+<%@ include file ="../part/head.jspf" %>
 <body>
   <h1>게시물 작성</h1>
 
@@ -45,5 +41,5 @@
       <a href="list">리스트</a>
     </div>
   </form>
-</body>
-</html>
+
+  <%@ include file ="../part/foot.jspf" %>

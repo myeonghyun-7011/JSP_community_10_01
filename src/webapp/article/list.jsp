@@ -1,26 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!doctype html>
-    <html lang="ko">
-    <head>
-      <title>게시물리스트</title>
-    </head>
 
-    <body>
-    <h1>게시물 리스트 </h1>
+<c:set var="pageTitle" value="게시물 리스트" />
+<%@ include file ="../part/head.jspf" %>
+<h1>게시물 리스트 </h1>
+<%@ include file ="../part/topBar.jspf" %>
 
-    <%@ include file ="../part/topBar.jspf" %>
+<div>
+  <a href="../home/main">홈으로 돌아가기</a>
+  <a href="write">게시물 작성</a>
+</div>
 
-    <div>
-      <a href="../home/main">홈으로 돌아가기</a>
-      &nbsp;
-      <a href="write">게시물 작성</a>
-
-    </div>
-
-
-    <table border="1" style="text-align : center">
+<table border="1" style="text-align : center">
       <colgroup>
         <col width="100">
         <col>
@@ -65,13 +57,13 @@
       <c:set var="pageMenuSize" value="5"/>
       <c:set var="from" value="${cPage - pageMenuSize}"/>
 
-      <c:if test="cPage > 1">
+      <c:if test="${cPage > 1}">
         <a href="list?page=1">◀</a>
       </c:if>
 
       <c:set var="start" value="${from < 1 ? 1 : from}" />
 
-      <c:set var="end" value="${cPage + 10}" />
+      <c:set var="end" value="${cPage + 5}" />
 
       <c:if test="${end > totalPage}">
         <c:set var="end" value="${totalPage}" />
@@ -85,6 +77,7 @@
       <c:if test="${ cPage < totalPage}">
         <a href="list?page=${totalPage}">▶</a>
       </c:if>
+
     </div>
-    </body>
-    </html>
+
+<%@ include file ="../part/foot.jspf" %>
