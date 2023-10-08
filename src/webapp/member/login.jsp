@@ -4,7 +4,6 @@
 <c:set var="pageTitle" value="로그인" />
 <%@ include file ="../part/head.jspf" %>
 <body>
-<h1> 로그인 </h1>
 <script>
   let loginForm__submitDone = false;
 

@@ -4,7 +4,6 @@
 <c:set var="pageTitle" value="회원가입" />
 <%@ include file ="../part/head.jspf" %>
 <body>
-<h1>회원 가입</h1>
 <script>
   let JoinForm__submitDone = false;
 

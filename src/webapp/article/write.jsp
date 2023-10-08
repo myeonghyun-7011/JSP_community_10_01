@@ -4,9 +4,7 @@
 <c:set var="pageTitle" value="게시물 작성" />
 <%@ include file ="../part/head.jspf" %>
 <body>
-  <h1>게시물 작성</h1>
-
-  <script>
+<script>
     let ArticleWrite__submitDone = false;
 
     function ArticleWrite__submit(form) {

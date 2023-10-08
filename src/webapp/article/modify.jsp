@@ -3,8 +3,7 @@
 
 <c:set var="pageTitle" value="게시물 수정" />
 <%@ include file ="../part/head.jspf" %>
-<h1>게시물 수정</h1>
-<%@ include file ="../part/topBar.jspf" %>
+
 <body>
   <form action="doModify" method="POST">
     <input type="hidden"  name="id" value="${param.id}">
