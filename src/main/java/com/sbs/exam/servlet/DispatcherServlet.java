@@ -3,6 +3,7 @@ package com.sbs.exam.servlet;
 import com.sbs.exam.Config;
 import com.sbs.exam.Rq;
 import com.sbs.exam.controller.ArticleController;
+import com.sbs.exam.controller.MemberController;
 import com.sbs.exam.exception.SQLErrorException;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
@@ -64,9 +65,13 @@ public class DispatcherServlet extends HttpServlet {
       switch (rq.getControllerTypeName()) { //1. TpyName = usr 가리킴.
         case "usr" :
           ArticleController articleController = new ArticleController(conn); // ArticleController 객체를 생성해서.
+          MemberController memberController = new MemberController(conn); // MemberController 객체를 생성해서.
           switch (rq.getControllerName()){ // 2. 이게 article이라면
             case "article" :
               articleController.performAction(rq); //performAction를 실행시켜줘라.
+              break;
+            case "member" :
+              memberController.performAction(rq); //performAction를 실행시켜줘라.
               break;
           }
       }

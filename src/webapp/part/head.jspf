@@ -28,7 +28,7 @@
 
 <header class="top-bar h-20 bg-[#dfdfdf] text-green-700 px-3" >
   <div class="container mx-auto h-full flex">
-    <a href="/home/main" class="top-bar__log flex items-center text-xl">
+    <a href="/usr/home/main" class="top-bar__log flex items-center text-xl">
 			<span>
 				<i class="fa-solid fa-dumbbell"></i>
 			</span>
@@ -42,7 +42,7 @@
 
         <li class="hover:bg-gray-400 hover:text-blue-300">
           <c:if test="${!isLogined}">
-            <a class=" flex h-full items-center px-3" href="../member/join">
+            <a class=" flex h-full items-center px-3" href="/usr/member/join">
               <span><i class="fa-solid fa-user-plus"></i></span>
               &nbsp;
               <span>JOIN</span>
@@ -52,7 +52,7 @@
 
         <li class="hover:bg-gray-400 hover:text-blue-300">
           <c:if test="${!isLogined}">
-            <a class="flex h-full items-center px-3" href="../member/login">
+            <a class="flex h-full items-center px-3" href="/usr/member/login">
               <span><i class="fa-solid fa-circle-user"></i></span>
               &nbsp;
               <span>LOGIN</span>
@@ -62,7 +62,7 @@
 
         <li class="hover:bg-gray-400 hover:text-blue-300">
           <c:if test="${isLogined}">
-            <a class="flex h-full items-center px-3" href="../member/myPage">
+            <a class="flex h-full items-center px-3" href="/usr/member/myPage">
               <span><i class="fa-solid fa-user-pen"></i></span>
               &nbsp;
               <span>"${loginedMemberRow.get("name")}" 회원</span>
@@ -72,7 +72,7 @@
 
         <li class="hover:bg-gray-400 hover:text-blue-300">
           <c:if test="${isLogined}">
-            <a class="flex h-full items-center px-3" href="../member/doLogout">
+            <a class="flex h-full items-center px-3" href="/usr/member/doLogout">
               <span><i class="fa-regular fa-circle-user"></i></span>
               &nbsp;
               <span>LOGOUT</span>
