@@ -30,10 +30,11 @@ public class ResultData {
   }
 
   public boolean isSuccess() { // 보고서 양식으로 도입.
-    return resultCode.startsWith("S-1");
+    return resultCode.startsWith("S-");
   }
 
   public boolean isFail() {
+
     return !isSuccess();
   }
 }

@@ -7,12 +7,12 @@ import com.sbs.exam.dto.ResultData;
 import com.sbs.exam.service.ArticleService;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
+import com.sbs.exam.util.Util;
 import jakarta.servlet.http.HttpSession;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
-
 
 public class ArticleController extends Controller {
   private ArticleService articleService;
@@ -38,10 +38,15 @@ public class ArticleController extends Controller {
       case "detail":
         actionDetailList(rq);
         break;
+      case "doDelete":
+        actionDoDelete(rq);
+        break;
       default:
         rq.println("존재하지 않는 페이지입니다.");
+
     }
   }
+
 
   private void actionDetailList(Rq rq) {
     int id = rq.getIntParam("id" , 0);
@@ -62,7 +67,6 @@ public class ArticleController extends Controller {
 
   private void actionDoWrite(Rq rq) {
     HttpSession session = rq.getReq().getSession(); //home서블릿 에 저장
-
 
     if (session.getAttribute("loginedMemberId") == null) {
       rq.print("<script>alert('로그인 후 이용해주세요.'); location.replace('../member/login');</script>");
@@ -107,6 +111,27 @@ public class ArticleController extends Controller {
     rq.getReq().setAttribute("totalPage", totalPage);
 
     rq.jsp("../article/list");
+
+  }
+
+  private void actionDoDelete(Rq rq) {
+    int id = rq.getIntParam("id" , 0);
+    String redirectUri = rq.getParam("redirectUri","../article/list");
+
+    if(id == 0){
+      rq.historyBack("id를 입력해주세요.");
+      return;
+    }
+
+    Article article =articleService.getForPrintArticleById(id);
+
+    if(article == null){
+      rq.historyBack(Util.f("%d번  게시물이 존재하지 않습니다.",id));
+      return;
+    }
+
+    ResultData deleteRd = articleService.delete(id); // ResultData(Dto)  보고서 됏다/안됏다를 담음.
+    rq.replace(deleteRd.getMsg(), redirectUri);
 
   }
 
