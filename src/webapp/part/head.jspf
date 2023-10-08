@@ -23,24 +23,66 @@
   <script defer src="../resource/common.js"></script>
 
 </head>
-
 <body>
+<c:set var="isLogined" value="${isLogined}"/>
 
-<div class="box-1"></div>
+<header class="top-bar h-20 bg-[#dfdfdf] text-green-700">
+  <div class="container mx-auto h-full flex">
+    <a href="/" class="top-bar__log flex items-center text-xl">
+			<span>
+				<i class="fa-solid fa-dumbbell"></i>
+			</span>
+      &nbsp;
+      <span>덤벨 커뮤니티</span>
+    </a>
+    <div class="flex-grow"></div>
 
+    <nav class="top-bar__menu-box-1 ">
+      <ul class="flex h-full ">
 
-<div>
-  <c:set var="!isLogined" value="${!isLogined}"/>
-  <c:if test="${!isLogined}">
-    <a href="../member/login">로그인</a>
-    &nbsp
-    <a href="../member/join">회원가입</a>
-  </c:if>
+        <li>
+          <c:if test="${!isLogined}">
+            <a class=" flex h-full items-center px-3" href="../member/join">
+              <span><i class="fa-solid fa-user-plus"></i></span>
+              &nbsp;
+              JOIN
+            </a>
+          </c:if>
+        </li>
 
-  <c:set var="isLogined" value="${isLogined}"/>
-  <c:if test="${isLogined}">
-    <span>"${loginedMemberRow.get("name")}" 회원님 환영합니다.</span>
-    <a href="/usr/member/doLogout">로그아웃</a>
-  </c:if>
-  <a href="/usr/article/list">게시물 리스트</a>
-</div>
+        <li>
+          <c:if test="${!isLogined}">
+            <a class="flex h-full items-center px-3" href="../member/login">
+              <span><i class="fa-solid fa-circle-user"></i></span>
+              &nbsp;
+              LOGIN
+            </a>
+          </c:if>
+        </li>
+
+        <li>
+          <c:if test="${isLogined}">
+            <a class="flex h-full items-center px-3" href="../member/doLogout">
+              <span>"${loginedMemberRow.get("name")}" 회원님 환영합니다.</span>
+              &nbsp;
+              <span><i class="fa-regular fa-circle-user"></i></span>
+              &nbsp;
+              LOGOUT
+            </a>
+          </c:if>
+        </li>
+
+        <li>
+          <a class=" flex h-full items-center px-3" href="../article/list">
+            <span><i class="fa-solid fa-table-list"></i></span>
+            &nbsp
+            ARTICLE LIST
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+
+  </div>
+
+</header>
