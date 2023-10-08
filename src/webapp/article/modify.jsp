@@ -10,7 +10,7 @@
     <input type="hidden"  name="id" value="${param.id}">
 
     <div>제목 : <input  placeholder="제목을 입력해주세요." name="title" type="text" value="${article.title}"></div>
-    <div>내용 : <textarea  placeholder="내용을 입력해주세요." name="body" type="text"><${article.body></textarea></div>
+    <div>내용 : <textarea  placeholder="내용을 입력해주세요." name="body" type="text"><${article.body}></textarea></div>
 
 
     <div>
