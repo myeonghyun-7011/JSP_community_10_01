@@ -13,6 +13,7 @@ public class Member {
   public String updateDate;
   public String loginId;
   public String loginPw;
+  public String name;
 
 
   public Member(Map<String, Object> row){
@@ -21,6 +22,7 @@ public class Member {
     this.updateDate =(String) row.get("updateDate");
     this.loginId =(String) row.get("loginId");
     this.loginPw =(String) row.get("loginPw");
+    this.name =(String) row.get("name");
   }
 }
 

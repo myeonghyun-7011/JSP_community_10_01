@@ -126,6 +126,7 @@ public class Rq {
   public void removeSessionAttr(String attrName) {
     req.getSession().removeAttribute(attrName);
   }
+  //제네럴 타입 알아두기만함.
   public <T> T getSessionAttr(String attrName) {
     return (T) req.getSession().getAttribute(attrName);
   }
