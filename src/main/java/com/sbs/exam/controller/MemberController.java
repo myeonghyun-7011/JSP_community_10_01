@@ -1,11 +1,13 @@
 package com.sbs.exam.controller;
 
 import com.sbs.exam.Rq;
+import com.sbs.exam.dto.Member;
 import com.sbs.exam.dto.ResultData;
 import com.sbs.exam.service.ArticleService;
 import com.sbs.exam.service.MemberService;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
+import com.sbs.exam.util.Util;
 import jakarta.servlet.http.HttpSession;
 
 import java.sql.Connection;
@@ -51,7 +53,11 @@ public class MemberController extends Controller {
       rq.historyBack(loginRd.getMsg());
     } // 실패 했을때 실패 msg 출력
 
-    rq.replace(loginRd.getMsg(), "../home/main"); // 성공메세지 출력
+    Member member = (Member) loginRd.getBody().get("member");
+
+    rq.setSessionAttr("loginedMemberJson", Util.toJson(member,""));
+
+    rq.replace(loginRd.getMsg(), "../article/list"); // 성공메세지 출력
 
   }
 
