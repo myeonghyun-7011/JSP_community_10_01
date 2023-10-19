@@ -1,6 +1,7 @@
 package com.sbs.exam.controller;
 
 import com.sbs.exam.Rq;
+import com.sbs.exam.container.Container;
 import com.sbs.exam.dto.Member;
 import com.sbs.exam.dto.ResultData;
 import com.sbs.exam.service.ArticleService;
@@ -14,11 +15,7 @@ import java.sql.Connection;
 import java.util.Map;
 
 public class MemberController extends Controller {
-  public MemberService memberService;
-
-  public MemberController(Connection conn) {
-    memberService = new MemberService(conn);
-  }
+  private MemberService memberService = Container.memberService;
 
   @Override // Controller라는 추상매서드를 사용햇기때문에 override를 해야함.
   public void performAction(Rq rq) { // performAction 실행해서.

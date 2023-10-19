@@ -2,6 +2,7 @@ package com.sbs.exam.controller;
 
 import com.sbs.exam.Config;
 import com.sbs.exam.Rq;
+import com.sbs.exam.container.Container;
 import com.sbs.exam.dto.Article;
 import com.sbs.exam.dto.ResultData;
 import com.sbs.exam.service.ArticleService;
@@ -15,13 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ArticleController extends Controller {
-  private ArticleService articleService;
-
-  public ArticleController(Connection conn) {
-
-    articleService = new ArticleService(conn);
-  }
-
+  private ArticleService articleService = Container.articleService;
 
   @Override // Controller라는 추상매서드를 사용햇기때문에 override를 해야함.
   public void performAction(Rq rq) { // performAction 실행해서.

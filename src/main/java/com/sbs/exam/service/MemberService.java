@@ -1,5 +1,6 @@
 package com.sbs.exam.service;
 
+import com.sbs.exam.container.Container;
 import com.sbs.exam.dto.ResultData;
 import com.sbs.exam.repository.ArticleRepository;
 import com.sbs.exam.repository.MemeberRepository;
@@ -8,10 +9,7 @@ import com.sbs.exam.dto.Member;
 import java.sql.Connection;
 
 public class MemberService {
-  private MemeberRepository memeberRepository;
-  public MemberService(Connection conn) {
-    memeberRepository = new MemeberRepository(conn);
-  }
+  private MemeberRepository memeberRepository = Container.memberRepository;
 
   public ResultData login(String loginId, String loginPw) {
     Member member = memeberRepository.getMemberByLoginId(loginId);

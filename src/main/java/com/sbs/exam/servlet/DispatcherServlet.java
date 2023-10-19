@@ -2,6 +2,7 @@ package com.sbs.exam.servlet;
 
 import com.sbs.exam.Config;
 import com.sbs.exam.Rq;
+import com.sbs.exam.container.Container;
 import com.sbs.exam.controller.ArticleController;
 import com.sbs.exam.controller.MemberController;
 import com.sbs.exam.exception.SQLErrorException;
@@ -25,8 +26,8 @@ import java.util.Map;
 public class DispatcherServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    new Container().init(); // 객체를 만들고 초기화를 시킴
     Rq rq = new Rq(req, resp);
-
 
     // DB 연결시작
     Connection conn = null;
@@ -40,7 +41,8 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     try {
-      conn = DriverManager.getConnection(Config.getDBUrl(), Config.getDBId(), Config.getDBPw());
+      conn = DriverManager.getConnection(Config.getDBUrl(), Config.getDBId(), Config.getDBPw()); // 정보들이 들어옴.
+      Container.conn = conn; // 들어온 정보들을 다시 연결해줌.
 
       // 모든 요청을 들어가기 전에 무조건 해야 하는 일 시작.
       HttpSession session = req.getSession();
@@ -64,14 +66,12 @@ public class DispatcherServlet extends HttpServlet {
 
       switch (rq.getControllerTypeName()) { //1. TpyName = usr 가리킴.
         case "usr" :
-          ArticleController articleController = new ArticleController(conn); // ArticleController 객체를 생성해서.
-          MemberController memberController = new MemberController(conn); // MemberController 객체를 생성해서.
           switch (rq.getControllerName()){ // 2. 이게 article이라면
             case "article" :
-              articleController.performAction(rq); //performAction를 실행시켜줘라.
+              Container.articleController.performAction(rq); //performAction를 실행시켜줘라.
               break;
             case "member" :
-              memberController.performAction(rq); //performAction를 실행시켜줘라.
+              Container.memberController.performAction(rq); //performAction를 실행시켜줘라.
               break;
           }
       }
