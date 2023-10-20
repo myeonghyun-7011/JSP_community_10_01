@@ -28,6 +28,23 @@ public class Rq {
   @Getter
   private boolean isInvalid = false;
 
+  @Getter
+  @Setter
+  private boolean isLogined = false;
+
+  @Getter
+  @Setter
+  private int loginedMemberId = 0;
+
+  @Getter
+  @Setter
+  private String loginedMemberName = null;
+
+  @Getter
+  @Setter
+  private Member loginedMember = null;
+
+
 
   public Rq(HttpServletRequest req, HttpServletResponse resp) {
     this.req = req;
@@ -53,7 +70,7 @@ public class Rq {
       return;
     }
 
-    this.controllerTypeName = requestUriBits[1];
+    this.controllerTypeName = requestUriBits[1]; // 유저
     this.controllerName = requestUriBits[2]; // controllerName 은 article 이냐  member인지 물어봄.
     this.actionMethodName = requestUriBits[3]; // actionMethodName 는 list인지 write 인지 detail or modify;
 
@@ -134,5 +151,12 @@ public class Rq {
     return (T) req.getSession().getAttribute(attrName);
   }
 
+  public String getActionPath() {
+    return "/" + controllerTypeName + "/" + controllerName + "/" + actionMethodName;
+  }
+
+  public boolean isNotLogined() {
+    return isLogined == false; // false , false 이기 때문에 로그인이 안된거임.
+  }
 }
 
