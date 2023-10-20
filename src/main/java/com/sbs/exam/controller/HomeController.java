@@ -11,7 +11,6 @@ public class HomeController extends Controller{
         break;
     }
   }
-
   private void actionShowHome(Rq rq) {
     rq.jsp("../home/main");
   }

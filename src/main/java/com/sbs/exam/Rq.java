@@ -1,5 +1,6 @@
 package com.sbs.exam;
 
+import com.sbs.exam.dto.Member;
 import com.sbs.exam.util.Util;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -7,9 +8,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.io.UnsupportedEncodingException;
 
 public class Rq {
@@ -130,5 +133,6 @@ public class Rq {
   public <T> T getSessionAttr(String attrName) {
     return (T) req.getSession().getAttribute(attrName);
   }
+
 }
 

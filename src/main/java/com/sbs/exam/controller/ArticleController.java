@@ -4,6 +4,7 @@ import com.sbs.exam.Config;
 import com.sbs.exam.Rq;
 import com.sbs.exam.container.Container;
 import com.sbs.exam.dto.Article;
+import com.sbs.exam.dto.Member;
 import com.sbs.exam.dto.ResultData;
 import com.sbs.exam.service.ArticleService;
 import com.sbs.exam.util.DBUtil;
@@ -50,15 +51,15 @@ public class ArticleController extends Controller {
   }
 
   private void actionDetailList(Rq rq) {
-    int id = rq.getIntParam("id" , 0);
+    int id = rq.getIntParam("id", 0);
 
-    if(id == 0) {
+    if (id == 0) {
       rq.historyBack("id를 입력해주세요.");
       return;
     }
     Article article = articleService.getForPrintArticleById(id);
 
-    rq.setAttr("article" , article);
+    rq.setAttr("article", article);
     rq.jsp("../article/detail");
   }
 
@@ -67,17 +68,18 @@ public class ArticleController extends Controller {
   }
 
   private void actionDoWrite(Rq rq) {
-    HttpSession session = rq.getReq().getSession(); //home서블릿 에 저장
+    String loginedMemberJson = rq.getSessionAttr("loginedMemberJson");
 
-    if (session.getAttribute("loginedMemberId") == null) {
+    if (loginedMemberJson == null) {
       rq.print("<script>alert('로그인 후 이용해주세요.'); location.replace('../member/login');</script>");
       return;
     }
     String title = rq.getParam("title", "");
     String body = rq.getParam("body", "");
-    String redirectUri = rq.getParam("redirectUri","../article/list");
+    String redirectUri = rq.getParam("redirectUri", "../article/list");
     // redirectUri 요청이 안들어오면 리스트 보여줌.
-    int loginedMemberId = (int) session.getAttribute("loginedMemberId");
+
+    Member loginedMember = Util.toObjFromJson(loginedMemberJson, Member.class); // json데이터를 자바 객체로 형변환해서 담음.
 
     if (title.length() == 0) {
       rq.historyBack("title을 입력해주세요");
@@ -87,9 +89,9 @@ public class ArticleController extends Controller {
       rq.historyBack("body를 입력해주세요");
       return;
     }
-    ResultData writeRd = articleService.write(title, body, loginedMemberId); // ResultData(Dto)  보고서 됏다/안됏다를 담음.
-    int id = (int)writeRd.getBody().get("id");
-    redirectUri = redirectUri.replace("[NEW_ID]",id + "");
+    ResultData writeRd = articleService.write(title, body, loginedMember.getId()); // ResultData(Dto)  보고서 됏다/안됏다를 담음.
+    int id = (int) writeRd.getBody().get("id");
+    redirectUri = redirectUri.replace("[NEW_ID]", id + "");
 
     // rq.printf(writeRd.getMsg());
     rq.replace(writeRd.getMsg(), redirectUri); // 몇번 글이 생성되었다.
@@ -116,18 +118,18 @@ public class ArticleController extends Controller {
   }
 
   private void actionDoDelete(Rq rq) {
-    int id = rq.getIntParam("id" , 0);
-    String redirectUri = rq.getParam("redirectUri","../article/list");
+    int id = rq.getIntParam("id", 0);
+    String redirectUri = rq.getParam("redirectUri", "../article/list");
 
-    if(id == 0){
+    if (id == 0) {
       rq.historyBack("id를 입력해주세요.");
       return;
     }
 
-    Article article =articleService.getForPrintArticleById(id);
+    Article article = articleService.getForPrintArticleById(id);
 
-    if(article == null){
-      rq.historyBack(Util.f("%d번  게시물이 존재하지 않습니다.",id));
+    if (article == null) {
+      rq.historyBack(Util.f("%d번  게시물이 존재하지 않습니다.", id));
       return;
     }
 
@@ -135,27 +137,28 @@ public class ArticleController extends Controller {
     rq.replace(deleteRd.getMsg(), redirectUri);
 
   }
-  private void actionShowModify(Rq rq) {
-    int id = rq.getIntParam("id" , 0);
 
-    if(id == 0) {
+  private void actionShowModify(Rq rq) {
+    int id = rq.getIntParam("id", 0);
+
+    if (id == 0) {
       rq.print("%d번 게시물은 없습니다.".formatted(id));
       return;
     }
-    if(id == 0){
+    if (id == 0) {
       rq.historyBack("id를 입력해주세요.");
       return;
     }
 
     Article article = articleService.getForPrintArticleById(id);
 
-    if(article == null){
-      rq.historyBack(Util.f("%d번 게시물이 존재하지 않습니다.",id)); // 서식지정자 사용.
+    if (article == null) {
+      rq.historyBack(Util.f("%d번 게시물이 존재하지 않습니다.", id)); // 서식지정자 사용.
       // rq.historyBack(("%d번 게시물이 존재하지 않습니다.").formatted(id));
       return;
     }
 
-    rq.setAttr("article" , article);
+    rq.setAttr("article", article);
     rq.jsp("../article/modify");
   }
 
@@ -163,16 +166,16 @@ public class ArticleController extends Controller {
     int id = rq.getIntParam("id", 0);
     String title = rq.getParam("title", "");
     String body = rq.getParam("body", "");
-    String redirectUri =rq.getParam("redirectUri", Util.f("../article/detail?id=%d", id));
+    String redirectUri = rq.getParam("redirectUri", Util.f("../article/detail?id=%d", id));
 
     if (id == 0) {
       rq.historyBack("id를 입력해주세요.");
     }
-    if(title.length() == 0){
+    if (title.length() == 0) {
       rq.historyBack("title을 입력해주세요.");
       return;
     }
-    if(body.length() == 0){
+    if (body.length() == 0) {
       rq.historyBack("body 입력해주세요.");
       return;
     }
