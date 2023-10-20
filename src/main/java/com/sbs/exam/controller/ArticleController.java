@@ -69,7 +69,7 @@ public class ArticleController extends Controller {
 
   private void actionDoWrite(Rq rq) {
     String loginedMemberJson = rq.getSessionAttr("loginedMemberJson");
-
+// session 정보를 loginedMemberJson 담음. 가져옴.
     if (loginedMemberJson == null) {
       rq.print("<script>alert('로그인 후 이용해주세요.'); location.replace('../member/login');</script>");
       return;
@@ -79,7 +79,8 @@ public class ArticleController extends Controller {
     String redirectUri = rq.getParam("redirectUri", "../article/list");
     // redirectUri 요청이 안들어오면 리스트 보여줌.
 
-    Member loginedMember = Util.toObjFromJson(loginedMemberJson, Member.class); // json데이터를 자바 객체로 형변환해서 담음.
+    Member loginedMember = Util.toObjFromJson(loginedMemberJson, Member.class); //
+    // json데이터를 자바 객체로 형변환해서 담음.
 
     if (title.length() == 0) {
       rq.historyBack("title을 입력해주세요");
@@ -90,6 +91,7 @@ public class ArticleController extends Controller {
       return;
     }
     ResultData writeRd = articleService.write(title, body, loginedMember.getId()); // ResultData(Dto)  보고서 됏다/안됏다를 담음.
+    //형변환된 loginedMemberJson 데이터를 getId해서 넘겨줌.
     int id = (int) writeRd.getBody().get("id");
     redirectUri = redirectUri.replace("[NEW_ID]", id + "");
 
