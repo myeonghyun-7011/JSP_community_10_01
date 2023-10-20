@@ -17,4 +17,26 @@ public class MemeberRepository {
     return new Member (DBUtil.selectRow(Container.conn, sql));
 
   }
+
+  public boolean isJoinDuplicateLoginId(String loginId) {
+    // true = 1 / false = 0 으로 출력함.
+    SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
+    sql.append("FROM member");
+    sql.append("WHERE loginId = ? ", loginId);
+
+    return DBUtil.selectRowIntValue(Container.conn, sql) == 0;
+
+  }
+
+  public int join(String loginId, String loginPw, String name) {
+    SecSql sql = SecSql.from("INSERT INTO member");
+    sql.append("SET regDate = NOW()");
+    sql.append(", updateDate = NOW()");
+    sql.append(", loginId = ?" , loginId);
+    sql.append(", loginPw = ?" , loginPw);
+    sql.append(", name = ?" , name);
+
+    int id = DBUtil.insert(Container.conn, sql);
+    return id;
+  }
 }
