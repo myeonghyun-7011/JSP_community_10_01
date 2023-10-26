@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="pageTitle" value="로그인" />
+<c:set var="pageTitle" value="로그인"/>
 <%@ include file ="../part/head.jspf" %>
 <body>
 <script>
@@ -36,13 +36,14 @@
 
 <form action="doLogin" method="POST" onsubmit="LoginForm__submit(this); return false">
 
-  <div>로그인 아이디 : <input placeholder="아이디를 입력해주세요." name="loginId" type="text"></div>
-  <div>로그인 패스워드 : <input  placeholder="비밀번호를 입력해주세요." name="loginPw" type="password"></div>
+  <div>로그인 아이디 : <input placeholder="아이디를 입력해주세요." name="loginId" type="text" value="${param.loginId}"></div>
+  <div>로그인 패스워드 : <input placeholder="비밀번호를 입력해주세요." name="loginPw" type="password"></div>
   <div class="btns">
     <button type="submit">로그인</button>
-    <button type="../member/findLoginId">아이디찾기</button>
-    <button type="button">
-      <a href="../member/join">회원가입</a>
+    &nbsp
+    <a href="../member/findLoginId">아이디찾기</a>
+    &nbsp
+    <a href="../member/join">회원가입</a>
     </button>
   </div>
 </form>
