@@ -12,11 +12,11 @@
 
 <!-- font-awesome 불러오기 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-<!-- daisy UI 불러오기 -->
+  <!-- daisy UI 불러오기 -->
   <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.2/dist/full.css" rel="stylesheet" type="text/css" />
 <!-- tailwind 불러오기 -->
   <script src="https://cdn.tailwindcss.com"></script>
+
 <!-- 공통 CSS연결 -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/common.css">
   <!-- 폰트 CSS연결 -->
