@@ -5,8 +5,12 @@
 }
 
 .btn-primary {
-    background-color: hls(var(--p)/var(--tw-bg-opacity)) !import;
+    background-color: hls(var(--p)/var(--tw-bg-opacity)) !important;
 }
+
+.join-wrap .btns .btn-secondary {
+ background-color: hls(var(--p)/var(--tw-bg-opacity)) !important;
+ }
 
 .login__box-sub-btns > a:hover {
 	text-decoration: underline;

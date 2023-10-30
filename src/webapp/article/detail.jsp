@@ -4,7 +4,6 @@
 <c:set var="pageTitle" value="게시물 상세보기"/>
 <%@ include file ="../part/head.jspf" %>
 
-
 <section class="section-article section-article-detail ">
   <div class="con mx-auto flex-col items-center ">
     <div class="mt-[40px] flex justify-end">
