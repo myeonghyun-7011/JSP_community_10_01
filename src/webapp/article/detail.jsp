@@ -60,10 +60,14 @@
       </div>
     </div>
     <div class="btns flex justify-end mt-[30px]">
-      <a href="doDelete?id=${param.id}" class="badge badge-primary badge-outline hover:underline">삭제</a>
+      <c:if test="${article.extra__actorCanModify}">
+        <a href="modify?id=${param.id}" class="badge badge-primary badge-outline hover:underline">수정</a>
+      </c:if>
       &nbsp;
       &nbsp;
-      <a href="modify?id=${param.id}" class="badge badge-primary badge-outline hover:underline">수정</a>
+      <c:if test="${article.extra__actorCanDelete}">
+      <a href="doDelete?id=${param.id}" onclick="if(!confirm('정말로 삭제하시겠습니까?') ) return false;" class="badge badge-primary badge-outline hover:underline">삭제</a>
+      </c:if>
     </div>
   </div>
 
