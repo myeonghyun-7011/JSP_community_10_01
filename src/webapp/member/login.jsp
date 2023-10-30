@@ -34,7 +34,7 @@
    }
 </script>
 
-<form action="doLogin" method="POST" onsubmit="LoginForm__submit(this); return false">1
+<form action="doLogin" method="POST" onsubmit="LoginForm__submit(this); return false">
   <div class="login-box h-screen flex flex-col items-center justify-center">
     <div class="login-box__input flex flex-col gap-y-[10px] mt-[10px]">
       <input type="text" name="loginId" placeholder="로그인 아이디를 입력해주세요." class="input input-bordered w-[300px] max-w-xs" value="${param.loginId}" />
